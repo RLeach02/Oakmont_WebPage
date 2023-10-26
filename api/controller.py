@@ -17,10 +17,10 @@ app = Flask(__name__, template_folder=template_path, static_folder=static_path)
 def create_db_connection():
     try:
         connection = mysql.connector.connect(
-            host="inflationdb.mysql.database.azure.com",
-            username="Oakmont",
-            password="StrattonStonks741",
-            database="oakmont_padb",
+            host=os.environ.get("DB_HOST"),
+            username=os.environ.get("DB_USERNAME"),
+            password=os.environ.get("DB_PASSWORD"),
+            database=os.environ.get("DB_NAME"),
         )
         print("Connection established\n")
         return connection
@@ -262,6 +262,5 @@ def index():
     )
 
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+if __name__ == "__main__":
+    app.run()
